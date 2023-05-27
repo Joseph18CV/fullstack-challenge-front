@@ -2,6 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { LoginData, loginSchema } from "./validator"
 import { useAuth } from "../../hooks/useAuth"
+import { StyledLogin } from "./styledLogin"
+import { Link } from "react-router-dom"
 
 export const Login = () => { 
 
@@ -12,21 +14,23 @@ export const Login = () => {
     const {signIn} = useAuth()
 
     return (
-        <main>  
-            <div>
+        <StyledLogin>  
+            <div className="div-form">
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit(signIn)}>
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" {...register("email")}/>
+                    <input type="email" id="email" placeholder="Digite seu email..." {...register("email")}/>
                     {errors.email?.message && <p>{errors.email.message}</p>}
 
                     <label htmlFor="Password">Password</label>
-                    <input type="password" id="password" {...register("password")}/>
+                    <input type="password" id="password" placeholder="Digite sua senha..." {...register("password")}/>
                     {errors.password?.message && <p>{errors.password.message}</p>}
 
                     <button type="submit">Entrar</button>
+                    <span>Ainda não tem uma conta?</span>
+                    <Link to={"/register"}>Faça o Cadastro</Link>
                 </form>
             </div>
-        </main>
+        </StyledLogin>
     )
 }
