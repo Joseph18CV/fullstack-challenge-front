@@ -2,7 +2,7 @@ import { ReactNode, createContext, useEffect } from "react"
 import { LoginData } from "../pages/Login/validator"
 import { api } from "../services/api"
 import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
+import { RegisterData } from "../pages/Register/validator"
 
 interface AuthProviderProps {
     children: ReactNode
@@ -10,6 +10,7 @@ interface AuthProviderProps {
 
 interface AuthContextValues {
     signIn: (data: LoginData) => void
+    registerClient: (data: RegisterData) => void
 }
 
 export const AuthContext = createContext({} as AuthContextValues)
@@ -41,8 +42,20 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         }
     }
 
+    const registerClient = async (data: RegisterData) => {
+        try {
+            const response = await api.post("/client", data)
+
+            window.localStorage.clear()
+
+            navigate("/")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{signIn}}>
+        <AuthContext.Provider value={{signIn, registerClient}}>
             {children}
         </AuthContext.Provider>
     )
