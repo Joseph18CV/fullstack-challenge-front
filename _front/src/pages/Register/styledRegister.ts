@@ -4,7 +4,7 @@ export const StyledRegister = styled.main`
     width: 100vw;
     height: 100vh;
 
-    background-color: #66CDAA;
+    background-color: rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
 
@@ -29,6 +29,7 @@ export const StyledRegister = styled.main`
         gap: 15px;
         margin: 10px;
         text-align: center;
+        max-height: 100%;
     }
 
     form input {
@@ -38,10 +39,11 @@ export const StyledRegister = styled.main`
         border-radius: 4px;
         color: black;
         font-weight: 500;
+        outline: none;
     }
 
     form p {
-        color: green;
+        color: red;
         font-weight: 550;
     }
 
@@ -69,10 +71,18 @@ export const StyledRegister = styled.main`
         font-size: 18px;
     }
 
+    form button:hover {
+        background-color: rgba(0,0,0,0.7);
+    }
+
     a { 
         padding: 8px;
         color: white;
         background-color: blue;
+    }
+
+    a:hover {
+        background-color: #1632ab;
     }
 
     .div-input-tel {
@@ -83,5 +93,9 @@ export const StyledRegister = styled.main`
 
     .input-tel {
         width: 100%;
+    }
+
+    .input-error {
+        border: 1.5px solid red;
     }
 `

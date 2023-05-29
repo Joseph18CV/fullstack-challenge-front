@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect } from "react"
+import { ReactNode, createContext, useEffect, useState } from "react"
 import { LoginData } from "../pages/Login/validator"
 import { api } from "../services/api"
 import { useNavigate } from "react-router-dom"
@@ -12,12 +12,36 @@ interface AuthProviderProps {
 interface AuthContextValues {
     signIn: (data: LoginData) => void
     registerClient: (data: RegisterData) => void
+    logOut: () => void
+    contacts: Contacts[]
+    clients: Client | undefined
+    setContacts: React.Dispatch<React.SetStateAction<Contacts[]>>
+    setClients: React.Dispatch<React.SetStateAction<Client | undefined>>
+}
+
+export interface Contacts {
+    id: number,
+    name: string,
+    email: string,
+    telephone: string
+}
+
+export interface Client {
+    id: number,
+    name: string,
+    email: string,
+    password: string,
+    telephone: string
+    contacts: [{id: string}]
 }
 
 export const AuthContext = createContext({} as AuthContextValues)
 
 export const AuthProvider = ({children}: AuthProviderProps) => {
     const navigate = useNavigate()
+
+    const [contacts, setContacts] = useState<Contacts[]>([])
+    const [clients, setClients] = useState<Client>()
 
     useEffect(() => {
         const token = localStorage.getItem("token")
@@ -61,9 +85,14 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
         }
     }
 
+    const logOut = () => {
+        localStorage.clear()
+        navigate("/")
+    }
+
     return (
-        <AuthContext.Provider value={{signIn, registerClient}}>
+        <AuthContext.Provider value={{signIn, registerClient, logOut, clients, contacts, setClients, setContacts}}>
             {children}
         </AuthContext.Provider>
     )
-}
+} 

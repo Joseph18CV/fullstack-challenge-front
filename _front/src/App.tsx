@@ -1,4 +1,5 @@
 import { AuthProvider } from "./providers/AuthProvider"
+import { UserProvider } from "./providers/UserProvider"
 import { RoutesMain } from "./routes"
 import { GlobalStyle } from "./styles/GlobalStyle"
 import { ToastContainer } from "react-toastify"
@@ -10,19 +11,21 @@ function App() {
     <>
       <GlobalStyle/>
       <AuthProvider>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-        <RoutesMain/>
+        <UserProvider>
+            <RoutesMain/>
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </UserProvider>
       </AuthProvider>
     </>
   )

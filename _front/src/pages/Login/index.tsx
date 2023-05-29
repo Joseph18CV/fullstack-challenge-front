@@ -19,11 +19,19 @@ export const Login = () => {
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit(signIn)}>
                     <label htmlFor="email">Email</label>
+                    {errors.email ?
+                    <input className="input-error" type="email" id="email" placeholder="Digite seu email..." {...register("email")}/>
+                    :
                     <input type="email" id="email" placeholder="Digite seu email..." {...register("email")}/>
+                    }       
                     {errors.email?.message && <p>{errors.email.message}</p>}
 
                     <label htmlFor="Password">Password</label>
+                    {errors.password ?
+                    <input className="input-error" type="password" id="password" placeholder="Digite sua senha..." {...register("password")}/>
+                    :
                     <input type="password" id="password" placeholder="Digite sua senha..." {...register("password")}/>
+                    }
                     {errors.password?.message && <p>{errors.password.message}</p>}
 
                     <button type="submit">Entrar</button>
