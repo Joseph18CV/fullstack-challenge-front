@@ -14,3 +14,13 @@ Por fim, para executar a aplicação, utilize o comando
 ```bash
 yarn dev
 ```
+-------------
+Tecnologias e bibliotecas utilizadas:
+- ZOD
+- NodeJS
+- TypeScript
+- Axios
+- Styled Components
+- ReactJS
+- JavaScript
+--------------
