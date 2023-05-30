@@ -10,15 +10,17 @@ import { conUser, useAuth } from "../../hooks/useAuth"
 import { Client, Contacts } from "../../providers/AuthProvider"
 import { ModalAddContact } from "../../components/ModalAddContact"
 import { ModalDeleteUser } from "../../components/ModalDeleteUser"
+import { ModalUpdateClient } from "../../components/ModalEditClient"
 
 export const Dashboard = () => {
 
     const token = localStorage.getItem("token")
     const {clients, contacts, setClients, setContacts, logOut} = useAuth()
-    const {setIsOpenModal, isOpenModal, setIsOpenModalDeleteuser, isOpenModalDeleteUser, setIsOpenModalDeleteContact, isOpenModalDeleteContact, contactDelete} = conUser()
+    const {setIsOpenModal, isOpenModal, setIsOpenModalDeleteuser, isOpenModalDeleteUser, contactDelete, isOpenModalUpdate, setIsOpenModalUpdate} = conUser()
 
     const toggleModal = () => setIsOpenModal(!isOpenModal)
     const toggleModalDeleteUser = () => setIsOpenModalDeleteuser(!isOpenModalDeleteUser)
+    const toggleModalUpdate = () => setIsOpenModalUpdate(!isOpenModalUpdate)
 
     useEffect(() => {
         const getContacts = async () => {
@@ -46,13 +48,14 @@ export const Dashboard = () => {
         <>
         {isOpenModalDeleteUser && <ModalDeleteUser/>}
         {isOpenModal && <ModalAddContact/>}
+        {isOpenModalUpdate && <ModalUpdateClient/>}
         <StyledDashboard>
         <StyledDashboardNav>
             <div className="div-nav">
                 <h2>Company</h2>
                 <div className="div-nav-client">
                     <button>Cliente: {clients?.name}</button>
-                    <FaUserEdit className="img-nav"/>
+                    <FaUserEdit onClick={toggleModalUpdate} className="img-nav"/>
                     <FaUserSlash onClick={toggleModalDeleteUser} className="img-nav"/>
                     <GrLogout onClick={() => logOut()} className="img-leave" />
                 </div>

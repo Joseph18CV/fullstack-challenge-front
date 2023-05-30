@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const StyledModalAddContact = styled.div`
+export const StyledModalEditClient = styled.div`
     background-color: rgba(0,0,0, .5);
     width: 100vw;
     height: 100vh;
@@ -75,12 +75,23 @@ export const StyledModalAddContact = styled.div`
     }
 
     button {
+        padding: 8px;
+        color: white;
+        background-color: blue;
+        margin-top: 10px;
+    }
+
+    .div-input-tel {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    button {
         height: 40px;
         outline: none;
         border: transparent;
         font-size: 18px;
-        background-color: blue;
-        color: white;
     }
 
 `

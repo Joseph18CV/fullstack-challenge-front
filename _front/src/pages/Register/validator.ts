@@ -12,4 +12,17 @@ export const RegisterSchema = z.object({
     path: ["confirmPassword"]
 })
 
+export const updateSchema = z.object({
+    name: z.string().optional(),
+    email: z.string().optional(),
+    password: z.string().optional(),
+    confirmPassword: z.string().optional(),
+    telephone: z.string().optional(),
+})
+.refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas nao coincidem",
+    path: ["confirmPassword"]
+})
+
+export type clientDataUpdate = z.infer<typeof updateSchema>
 export type RegisterData = z.infer<typeof RegisterSchema>

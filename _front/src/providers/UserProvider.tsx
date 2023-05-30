@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth"
 import { useNavigate } from "react-router"
 import { contactData } from "../components/ModalAddContact/validator"
 import { toast } from "react-toastify"
+import { clientDataUpdate } from "../pages/Register/validator"
 
 interface UserProviderProps {
     children: ReactNode
@@ -19,18 +20,22 @@ interface UserContextValues {
     setIsOpenModalDeleteuser: React.Dispatch<React.SetStateAction<boolean>>
     isOpenModalDeleteContact: boolean
     setIsOpenModalDeleteContact: React.Dispatch<React.SetStateAction<boolean>>
+    userUpdate: (data: clientDataUpdate) => void
+    setIsOpenModalUpdate: React.Dispatch<React.SetStateAction<boolean>>
+    isOpenModalUpdate: boolean
 }
 
 export const UserContext = createContext({} as UserContextValues)
 
 export const UserProvider = ({children}: UserProviderProps) => {
     
-    const {clients, contacts} = useAuth()
+    const {clients, contacts, setClients} = useAuth()
     const navigate = useNavigate()
     const token = localStorage.getItem("token")
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [isOpenModalDeleteUser, setIsOpenModalDeleteuser] = useState(false)
     const [isOpenModalDeleteContact, setIsOpenModalDeleteContact] = useState(false)
+    const [isOpenModalUpdate, setIsOpenModalUpdate] = useState(false)
 
     const userDelete = async () => {
         try {
@@ -39,6 +44,19 @@ export const UserProvider = ({children}: UserProviderProps) => {
             })
             window.localStorage.clear()
             navigate("/")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const userUpdate = async (data: clientDataUpdate) => {
+        try {
+            const response = await api.patch(`client/${clients?.id}`, data, {
+                headers: {Authorization: `Bearer ${token}`}
+            })
+            setClients(response.data)
+            location.reload()
+            
         } catch (error) {
             console.error(error)
         }
@@ -68,7 +86,7 @@ export const UserProvider = ({children}: UserProviderProps) => {
     }
 
     return (
-        <UserContext.Provider value={{userDelete, isOpenModal, setIsOpenModal, addContact, isOpenModalDeleteUser, setIsOpenModalDeleteuser, contactDelete, setIsOpenModalDeleteContact, isOpenModalDeleteContact}}>
+        <UserContext.Provider value={{userDelete, isOpenModal, setIsOpenModal, addContact, isOpenModalDeleteUser, setIsOpenModalDeleteuser, contactDelete, setIsOpenModalDeleteContact, isOpenModalDeleteContact, userUpdate, isOpenModalUpdate, setIsOpenModalUpdate}}>
             {children}
         </UserContext.Provider>
     )
